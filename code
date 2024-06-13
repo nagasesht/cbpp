@@ -1,0 +1,71 @@
+#include <graphics.h>
+#include <stdio.h>
+#include <conio.h>
+
+#define MAX 5
+
+int stack[MAX];
+int top = -1;
+
+void drawStack() {
+    int i,j;
+    cleardevice();
+    setcolor(WHITE);
+    rectangle(100, 50, 200, 50 + 50 * MAX);
+    for (i= 0 , j=MAX-1; i < MAX; i++) {
+	rectangle(100, 50 + i * 50, 200, 100 + i * 50);
+	if (i <= top) {
+	    char buffer[10];
+	    sprintf(buffer, "%d", stack[i]);
+	    outtextxy(150, 75 + (j--) * 50, buffer);
+	}
+    }
+    if (top == -1) {
+	outtextxy(250, 300, "Stack is empty");
+    }
+    if (top == MAX - 1) {
+	outtextxy(250, 320, "Stack is full");
+    }
+}
+
+void push(value) {
+    if (top < MAX - 1) {
+	stack[++top] = value;
+    }
+    drawStack();
+}
+
+void pop() {
+    if (top >= 0) {
+	top--;
+    }
+    drawStack();
+}
+
+int main() {
+    char ch;
+    int value;
+    int gd = DETECT, gm;
+    initgraph(&gd, &gm, "C:\\Turboc3\\BGI");
+    drawStack();
+
+    while (1) {
+	outtextxy(250, 350, "Press 'u' to push, 'o' to pop, 'q' to quit");
+
+	ch = getch();
+	if (ch == 'q') break;
+
+	if (ch == 'u') {
+	    outtextxy(250, 370, "Enter value to push: ");
+	    scanf("%d", &value);
+	    push(value);
+	}
+
+	if (ch == 'o') {
+	    pop();
+	}
+    }
+
+    closegraph();
+    return 0;
+}
