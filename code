@@ -1,7 +1,7 @@
 #include <graphics.h>
 #include <stdio.h>
 #include <conio.h>
-
+#hey this is swayam 
 #define MAX 5
 
 int stack[MAX];
